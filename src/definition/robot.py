@@ -1,6 +1,9 @@
 """
 The robot module contains the classes that define a robot.
 """
+from src.definition.acting import Acting
+from src.definition.core import Core
+from src.definition.sensing import Sensing
 
 
 class Functionality:
@@ -8,7 +11,7 @@ class Functionality:
     The Functionality class represents the functional part (software) of the robot.
     """
 
-    def __init__(self, sensing, core, acting):
+    def __init__(self, sensing: Sensing, core: Core, acting: Acting):
         """
         Initializes a Functionality object that contains the three parts of the robot's software: Sensing, Core, Acting.
 
