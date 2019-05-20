@@ -1,6 +1,7 @@
 """
 The simulator class defines all the necessary classes to start a simulation.
 """
+import time
 from typing import List
 
 import pybullet
@@ -15,13 +16,15 @@ class Simulator:
 
     def __init__(self):
         self._client = pybullet.connect(pybullet.GUI)
-        pybullet.setGravity(0, 0, -10)
+        pybullet.setGravity(0, 0, -10, self._client)
 
     def spawn_robot(self, robot: Robot, position: List[float] = None, orientation: List[float] = None):
         """
         Spawns a robot in the simulator.
 
         :param robot: Robot object to be spawned
+        :param position: Position to spawn at as a list [x, y, z]
+        :param orientation: Orientation to spawn at as a list (Euler angle) [x, y, z]
         """
         if position is None:
             position = [0, 0, 0]
@@ -31,6 +34,18 @@ class Simulator:
 
         pybullet.loadURDF(robot.physical_definition_filename, position, pybullet.getQuaternionFromEuler(orientation),
                           physicsClientId=self._client)
+
+    def simulate(self, seconds, framerate=240):
+        """
+        Run the simulation for a given amount of seconds at a set frequency.
+
+        :param seconds: Number of seconds to run the simulation
+        :param framerate: Framerate at which to take simulation steps
+        :return:
+        """
+        for _ in range(seconds * framerate):
+            pybullet.stepSimulation(self._client)
+            time.sleep(1/framerate)
 
     def stop(self):
         """
