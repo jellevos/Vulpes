@@ -10,4 +10,4 @@ class UnderwaterYawbot(Robot):
     """
 
     def __init__(self):
-        super().__init__(None, None)
+        super().__init__('underwater_yawbot/underwater_yawbot.urdf', None)

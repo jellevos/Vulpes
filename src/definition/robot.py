@@ -36,5 +36,14 @@ class Robot:
         :param physical_definition_file: SDF or URDF file representing the physical robot
         :param functionality: Object representing the behavioural part of the robot
         """
-        self._physical_definition_file = physical_definition_file
+        self._physical_definition_filename = physical_definition_file
         self._functionality = functionality
+
+    @property
+    def physical_definition_filename(self) -> str:
+        """
+        Gets the name of the physical definition file.
+
+        :return: Name of the physical definition file
+        """
+        return self._physical_definition_filename

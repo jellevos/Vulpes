@@ -1,2 +1,6 @@
+# Software quality and testing
 pylama
 pylint
+
+# Simulation and physics
+pybullet
