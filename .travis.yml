@@ -1,4 +1,5 @@
 language: python
 script:
   - pylama src
+  - pylama demo
   - python -m unittest

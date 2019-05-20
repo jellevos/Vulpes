@@ -21,7 +21,7 @@ class Estimator:
         self._update_frequency = update_frequency
 
     @property
-    def estimations(self):
+    def estimations(self) -> List[str]:
         """
         Get the names of the estimations that this Estimator computes.
 
