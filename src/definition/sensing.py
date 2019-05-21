@@ -10,7 +10,7 @@ class Sensing:
     """
 
     def __init__(self):
-        self._estimators = {}
+        self._estimators = []
 
     def add_estimator(self, estimator: Estimator):
         """
@@ -18,8 +18,4 @@ class Sensing:
 
         :param estimator: Estimator object
         """
-        for estimation in estimator.estimations:
-            if estimation in self._estimators:
-                raise BaseException("There was already an estimation with this name.")
-
-            self._estimators[estimation] = None
+        self._estimators.append(estimator)

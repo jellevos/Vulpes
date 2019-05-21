@@ -7,7 +7,7 @@ from demo.underwater_yawbot.underwater_yawbot import UnderwaterYawbot
 from src.simulation.simulator import Simulator
 
 SIMULATOR = Simulator()
-SIMULATOR.spawn_robot(UnderwaterYawbot(), [0, 0, 3])
+SIMULATOR.spawn_robot(UnderwaterYawbot.with_pid_control(), [0, 0, 3])
 
 time.sleep(1)
 
