@@ -1,7 +1,7 @@
 import unittest
 
 from src.definition.sensing import Sensing
-from src.sensing.estimation import Estimator
+from src.estimations.imu import OrientationEstimator
 
 
 class TestAddingEstimators(unittest.TestCase):
@@ -10,18 +10,8 @@ class TestAddingEstimators(unittest.TestCase):
         self.sensing = Sensing()
 
     def test_adding_new(self):
-        estimator = Estimator(['orientation'], 2)
+        estimator = OrientationEstimator(None, None, None, 2)
 
         self.sensing.add_estimator(estimator)
 
-        self.assertEqual(list(self.sensing._estimators.keys()), ['orientation'])
-        self.assertIsNone(self.sensing._estimators['orientation'])
-
-    def test_adding_double(self):
-        estimator_alpha = Estimator(['velocity', 'orientation'], 4)
-        estimator_beta = Estimator(['temperature', 'velocity'], 3)
-
-        self.sensing.add_estimator(estimator_alpha)
-
-        with self.assertRaises(BaseException):
-            self.sensing.add_estimator(estimator_beta)
+        self.assertEqual(self.sensing._estimators[0], estimator)
