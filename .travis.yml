@@ -1,3 +1,7 @@
+dist: xenial
+services:
+  - xvfb
+
 language: python
 script:
   - pylama src
