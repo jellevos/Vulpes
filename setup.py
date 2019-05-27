@@ -8,4 +8,4 @@ setup(name='Vulpes',
       author='Jelle Vos',
       author_email='j.v.jelle@gmail.com',
       packages=['src'],
-)
+      )
