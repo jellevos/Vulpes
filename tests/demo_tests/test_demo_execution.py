@@ -2,9 +2,6 @@ import unittest
 
 import pybullet
 
-from src.definition.sensing import Sensing
-from src.sensing.estimation import Estimator
-
 
 class TestUnderwaterYawbot(unittest.TestCase):
 

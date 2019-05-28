@@ -10,8 +10,8 @@ class OrientationEstimator(Estimator[Quaternion]):
     The OrientationEstimator estimates a quaternion orientation from an accelerometer, gyroscope and magnetometer.
     """
 
-    def __init__(self, accelerometer, gyroscope, magnetometer, update_frequency):
-        super().__init__(update_frequency)
+    def __init__(self, name, accelerometer, gyroscope, magnetometer, update_frequency):
+        super().__init__(name, update_frequency)
 
         self._accelerometer = accelerometer
         self._gyroscope = gyroscope

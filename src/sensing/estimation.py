@@ -12,15 +12,16 @@ class Estimator(Generic[E]):
     The Estimator class polls Sensors to update a list of estimations.
     """
 
-    def __init__(self, update_frequency):
+    def __init__(self, name: str, update_frequency: float):
         """
         Initializes an Estimator object with a list of the names of estimations that it computes at the set frequency.
 
-        :param estimations:
-        :param update_frequency:
+        :param name: Name of the Estimator
+        :param update_frequency: Frequency at which the estimation is updated
         """
         self._estimations = None
 
+        self._name = name
         self._update_frequency = update_frequency
 
     @property
@@ -45,3 +46,12 @@ class Estimator(Generic[E]):
         (Re)computers and updates the cached estimations
         """
         self._estimations = self._estimate()
+
+    @property
+    def name(self) -> str:
+        """
+        Gets the name of this Estimator.
+
+        :return: Name of the Estimator
+        """
+        return self._name

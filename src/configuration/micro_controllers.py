@@ -15,6 +15,8 @@ class MicroController(Device):
 
         :param compile_target: Thumb instruction set name
         """
+        super().__init__()
+
         self._compile_target = compile_target
 
     def compile(self):
@@ -23,6 +25,8 @@ class MicroController(Device):
 
         :return: Reference to the compiled code
         """
+        raise NotImplementedError("The MicroController class does not represent an actual micro controller that can be "
+                                  "compiled to.")
 
 
 class STM32F3(MicroController):
@@ -32,3 +36,6 @@ class STM32F3(MicroController):
 
     def __init__(self):
         super().__init__('thumbv7em-none-eabihf')
+
+    def compile(self):
+        raise NotImplementedError("It is not yet possible to compile for the STM32F3 family.")

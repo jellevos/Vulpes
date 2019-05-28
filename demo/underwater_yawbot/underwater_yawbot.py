@@ -1,9 +1,10 @@
 """
 The underwater_yawbot module defines the Underwater Yawbot robot.
 """
+from src.configuration.configuration import DevicesConfiguration
+from src.configuration.general_devices import PythonDevice
 from src.definition.core import Core
-from src.definition.robot import Robot, Functionality
-from src.definition.sensing import Sensing
+from src.definition.robot import Robot
 from src.estimations.imu import OrientationEstimator
 
 
@@ -12,13 +13,13 @@ class UnderwaterYawbot(Robot):
     The UnderwaterYawbot is a robot that yaws around a central axis underwater.
     """
 
-    def __init__(self, functionality: Functionality):
+    def __init__(self, devices_configuration: DevicesConfiguration):
         """
         Initializes an UnderwaterYawbot with the given functionality.
 
         :param functionality: Robot's functionality
         """
-        super().__init__('underwater_yawbot/underwater_yawbot.urdf', functionality)
+        super().__init__('underwater_yawbot/underwater_yawbot.urdf', devices_configuration)
 
     @classmethod
     def with_pid_control(cls):
@@ -27,10 +28,13 @@ class UnderwaterYawbot(Robot):
 
         :return: UnderwaterYawbot instance
         """
-        sensing = Sensing()
-        sensing.add_estimator(OrientationEstimator(None, None, None, 10))
+        python_device = PythonDevice()
+        python_device.add_estimator(OrientationEstimator('orientation', None, None, None, 10))
 
-        return cls(Functionality(sensing, PIDUnderwaterYawbotCore(), None))
+        configuration = DevicesConfiguration()
+        configuration.add_python_device(python_device)
+
+        return cls(configuration)
 
 
 class PIDUnderwaterYawbotCore(Core):
