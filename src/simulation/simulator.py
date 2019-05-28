@@ -32,8 +32,10 @@ class Simulator:
         if orientation is None:
             orientation = [0, 0, 0]
 
-        pybullet.loadURDF(robot.physical_definition_filename, position, pybullet.getQuaternionFromEuler(orientation),
-                          physicsClientId=self._client)
+        robot_id = pybullet.loadURDF(robot.physical_definition_filename, position,
+                                     pybullet.getQuaternionFromEuler(orientation), physicsClientId=self._client)
+
+        robot.attach_to_simulation(self._client, robot_id)
 
     def simulate(self, seconds, framerate=240):
         """
