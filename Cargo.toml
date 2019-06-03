@@ -11,3 +11,6 @@ crate-type = ["cdylib"]
 [dependencies.pyo3]
 version = "0.7.0"
 features = ["extension-module"]
+
+[dependencies.madgwick]
+version = "0.1.1"

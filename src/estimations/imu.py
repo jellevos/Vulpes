@@ -4,6 +4,8 @@ The imu module defines existing attitude and heading estimators.
 from src.representations.rotations import Quaternion
 from src.sensing.estimation import Estimator
 
+from string_sum import sum_as_string
+
 
 class OrientationEstimator(Estimator[Quaternion]):
     """
