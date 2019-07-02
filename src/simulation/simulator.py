@@ -40,19 +40,24 @@ class Simulator:
         robot.attach_to_simulation(self._client, robot_id)
         self._robots.append(robot)
 
+    def step(self):
+        """
+        Take a single step in the simulation.
+        """
+        for robot in self._robots:
+            robot.update_applied_forces()
+
+        pybullet.stepSimulation(self._client)
+
     def simulate(self, seconds, framerate=240):
         """
         Run the simulation for a given amount of seconds at a set frequency.
 
         :param seconds: Number of seconds to run the simulation
         :param framerate: Framerate at which to take simulation steps
-        :return:
         """
         for _ in range(seconds * framerate):
-            for robot in self._robots:
-                robot.update_applied_forces()
-
-            pybullet.stepSimulation(self._client)
+            self.step()
             time.sleep(1/framerate)
 
     def stop(self):

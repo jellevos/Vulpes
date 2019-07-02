@@ -8,24 +8,34 @@ from src.simulation.simulator import Simulator
 
 class TestBuoyantForce(unittest.TestCase):
 
-    def test_robot_floats(self):
+    def test_robot_floats(self, tries=20):
         simulator = Simulator()
 
         robot = UnderwaterRobot('simple_cylinder_light.urdf', Mock(),
                                 0.2 * 0.2 * math.pi * 0.6)
         simulator.spawn_robot(robot, [0, 0, -2])
 
-        simulator.simulate(5)
+        last_depth = -2
+        for i in range(tries):
+            simulator.step()
+            position, _ = robot.get_position_and_orientation()
+            self.assertGreater(position[2], last_depth)
+            last_depth = position[2]
 
         simulator.stop()
 
-    def test_robot_sinks(self):
+    def test_robot_sinks(self, tries=20):
         simulator = Simulator()
 
         robot = UnderwaterRobot('simple_cylinder_heavy.urdf', Mock(),
                                 0.2 * 0.2 * math.pi * 0.6)
         simulator.spawn_robot(robot, [0, 0, -2])
 
-        simulator.simulate(5)
+        last_depth = -2
+        for i in range(tries):
+            simulator.step()
+            position, _ = robot.get_position_and_orientation()
+            self.assertLess(position[2], last_depth)
+            last_depth = position[2]
 
         simulator.stop()
