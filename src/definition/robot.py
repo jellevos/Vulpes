@@ -56,7 +56,7 @@ class Robot:
 
         return position, Quaternion(*orientation)
 
-    def _update_forces(self):
+    def update_applied_forces(self):
         """
         Applies the set of (continuous) external forces (or torques) on the robot.
         """
@@ -68,13 +68,16 @@ class UnderwaterRobot(Robot):
     """
 
     def __init__(self, physical_definition_file: str, devices_configuration: DevicesConfiguration,
-                 buoyant_volume: float, centre_of_buoyancy: [0, 0, 0], water_density: float = 1030):
+                 buoyant_volume: float, centre_of_buoyancy: list = None, water_density: float = 1030):
         super().__init__(physical_definition_file, devices_configuration)
+
+        if centre_of_buoyancy is None:
+            centre_of_buoyancy = [0, 0, 0]
 
         self._centre_of_buoyancy = centre_of_buoyancy
         self._buoyant_force = buoyant_volume * water_density * 10  # Weight of displaced water
 
-    def _update_force(self):
+    def update_applied_forces(self):
         """
         Applies the continuous buoyant force on the base link of the robot.
         """

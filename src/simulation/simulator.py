@@ -49,6 +49,9 @@ class Simulator:
         :return:
         """
         for _ in range(seconds * framerate):
+            for robot in self._robots:
+                robot.update_applied_forces()
+
             pybullet.stepSimulation(self._client)
             time.sleep(1/framerate)
 
