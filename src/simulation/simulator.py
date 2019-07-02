@@ -18,6 +18,8 @@ class Simulator:
         self._client = pybullet.connect(pybullet.GUI)
         pybullet.setGravity(0, 0, -10, self._client)
 
+        self._robots = []
+
     def spawn_robot(self, robot: Robot, position: List[float] = None, orientation: List[float] = None):
         """
         Spawns a robot in the simulator.
@@ -36,6 +38,7 @@ class Simulator:
                                      pybullet.getQuaternionFromEuler(orientation), physicsClientId=self._client)
 
         robot.attach_to_simulation(self._client, robot_id)
+        self._robots.append(robot)
 
     def simulate(self, seconds, framerate=240):
         """
