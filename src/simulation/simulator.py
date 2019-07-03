@@ -14,9 +14,15 @@ class Simulator:
     The Simulator represents a simulation instance, in which robots can be spawned to be tested.
     """
 
-    def __init__(self):
-        self._client = pybullet.connect(pybullet.GUI)
+    def __init__(self, user_interface=True):
+        connection_mode = pybullet.GUI
+        if not user_interface:
+            connection_mode = pybullet.DIRECT
+
+        self._client = pybullet.connect(connection_mode)
         pybullet.setGravity(0, 0, -10, self._client)
+
+        self._robots = []
 
     def spawn_robot(self, robot: Robot, position: List[float] = None, orientation: List[float] = None):
         """
@@ -36,6 +42,16 @@ class Simulator:
                                      pybullet.getQuaternionFromEuler(orientation), physicsClientId=self._client)
 
         robot.attach_to_simulation(self._client, robot_id)
+        self._robots.append(robot)
+
+    def step(self):
+        """
+        Take a single step in the simulation.
+        """
+        for robot in self._robots:
+            robot.update_applied_forces()
+
+        pybullet.stepSimulation(self._client)
 
     def simulate(self, seconds, framerate=240):
         """
@@ -43,10 +59,9 @@ class Simulator:
 
         :param seconds: Number of seconds to run the simulation
         :param framerate: Framerate at which to take simulation steps
-        :return:
         """
         for _ in range(seconds * framerate):
-            pybullet.stepSimulation(self._client)
+            self.step()
             time.sleep(1/framerate)
 
     def stop(self):
