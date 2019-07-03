@@ -1,6 +1,8 @@
 """
 The underwater_yawbot module defines the Underwater Yawbot robot.
 """
+from pathlib import Path
+
 from src.configuration.configuration import DevicesConfiguration
 from src.configuration.general_devices import PythonDevice
 from src.definition.core import Core
@@ -19,7 +21,8 @@ class UnderwaterYawbot(Robot):
 
         :param functionality: Robot's functionality
         """
-        super().__init__('underwater_yawbot/underwater_yawbot.urdf', devices_configuration)
+        file_path = (Path(__file__).parent / 'underwater_yawbot.urdf').resolve()
+        super().__init__(file_path, devices_configuration)
 
     @classmethod
     def with_pid_control(cls):

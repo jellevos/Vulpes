@@ -1,6 +1,7 @@
 """
 The robot module contains the classes that define a robot.
 """
+from pathlib import Path
 from typing import List
 
 import pybullet
@@ -14,14 +15,14 @@ class Robot:
     The Robot class represents the physical entity of the robot in the software.
     """
 
-    def __init__(self, physical_definition_file: str, devices_configuration: DevicesConfiguration):
+    def __init__(self, physical_definition_path: Path, devices_configuration: DevicesConfiguration):
         """
         Initializes a Robot object from the physical definition represented by an SDF or URDF file.
 
-        :param physical_definition_file: SDF or URDF file representing the physical robot
+        :param physical_definition_path: SDF or URDF file representing the physical robot
         :param devices_configuration: Configuration of the devices that the robot's software will be run on
         """
-        self._physical_definition_filename = physical_definition_file
+        self._physical_definition_filename = str(physical_definition_path)
         self._devices_configuration = devices_configuration
 
         self._simulation_id = None
@@ -67,9 +68,9 @@ class UnderwaterRobot(Robot):
     The UnderwaterRobot class represents a robot upon which acts a buoyant force.
     """
 
-    def __init__(self, physical_definition_file: str, devices_configuration: DevicesConfiguration,
+    def __init__(self, physical_definition_path: str, devices_configuration: DevicesConfiguration,
                  buoyant_volume: float, centre_of_buoyancy: list = None, water_density: float = 1030):
-        super().__init__(physical_definition_file, devices_configuration)
+        super().__init__(physical_definition_path, devices_configuration)
 
         if centre_of_buoyancy is None:
             centre_of_buoyancy = [0, 0, 0]
