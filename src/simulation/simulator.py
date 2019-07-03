@@ -14,8 +14,12 @@ class Simulator:
     The Simulator represents a simulation instance, in which robots can be spawned to be tested.
     """
 
-    def __init__(self):
-        self._client = pybullet.connect(pybullet.GUI)
+    def __init__(self, user_interface=True):
+        connection_mode = pybullet.GUI
+        if not user_interface:
+            connection_mode = pybullet.DIRECT
+
+        self._client = pybullet.connect(connection_mode)
         pybullet.setGravity(0, 0, -10, self._client)
 
         self._robots = []
