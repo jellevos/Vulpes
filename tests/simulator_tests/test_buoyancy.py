@@ -2,7 +2,7 @@ import math
 import unittest
 from unittest.mock import Mock
 
-from definition.robot import UnderwaterRobot
+from src.definition.robot import UnderwaterRobot
 from src.simulation.simulator import Simulator
 
 
